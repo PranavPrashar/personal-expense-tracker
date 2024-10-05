@@ -128,6 +128,7 @@ function EditExpense() {
               Select Category
             </option>
             <option value="Food">Food</option>
+            <option value="Rent">Rent</option>
             <option value="Transportation">Transportation</option>
             <option value="Entertainment">Entertainment</option>
           </select>

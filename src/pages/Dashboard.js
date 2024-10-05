@@ -54,7 +54,7 @@ const Dashboard = () => {
     <div className="container mx-auto p-6">
       {/* Summary Section */}
       <div className="mb-6">
-        <TotalExpenses total={totalExpenses} />
+        <TotalExpenses total={totalExpenses} expenseData={expenses}/>
 
         {/* Display categorized totals */}
         <div className="bg-white p-6 rounded-lg shadow-md mb-6">
