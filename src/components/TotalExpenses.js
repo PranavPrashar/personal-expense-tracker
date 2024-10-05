@@ -19,20 +19,20 @@ function TotalExpenses({ total, expenseData }) {
       <div className="bg-white p-6 rounded-lg shadow-md flex md:flex-row md:items-start flex-col justify-between">
         <div className="md:w-1/3 flex md:flex-col md:items-start md:justify-start flex-row items-center justify-between w-full">
           <h2 className="text-xl font-bold">Total Expenses: </h2>
-          <p className="text-3xl md:mt-4">${total}</p>
+          <p className="text-3xl md:mt-4">${parseFloat(total).toFixed(2)}</p>
         </div>
 
         <div className="md:w-1/3 md:flex-col flex-row md:py-0 py-4">
           <h3 className="text-lg font-bold">Expenses Categorized by Type:</h3>
           <ul>
-            {Object.entries(totalExpensesByCategory).map(
+            {Object.keys(totalExpensesByCategory).length > 0 ? Object.entries(totalExpensesByCategory).map(
               ([category, total]) => (
                 <li key={category} className="mt-2">
                   <span className="font-semibold">{category}:</span> $
                   {total.toFixed(2)}
                 </li>
               )
-            )}
+            ) : <li>There are currently no expenses to display.</li>}
           </ul>
         </div>
 
