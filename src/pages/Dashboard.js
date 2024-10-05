@@ -1,27 +1,18 @@
 // src/pages/Dashboard.js
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import TotalExpenses from '../components/TotalExpenses';
-
 import axios from 'axios';
 
 const Dashboard = () => {
-  // Example data (in a real app, you'd fetch this from state or a backend)
-//   const expenses = [
-//     { id: 1, date: '2024-01-15', category: 'Food', description: 'Groceries', amount: 50 },
-//     { id: 2, date: '2024-01-16', category: 'Transportation', description: 'Bus Ticket', amount: 3 },
-//     { id: 3, date: '2024-01-17', category: 'Entertainment', description: 'Movie Ticket', amount: 12 },
-//   ];
-
   const [expenses, setExpenses] = useState([]);
 
-
-  useEffect(()=>{
-    axios.get("http://localhost:3001/expenses").then((response)=>{
-        console.log(response.data)
-        setExpenses(response.data)
-    })
-  },[])
+  useEffect(() => {
+    // Fetch the expenses from the server
+    axios.get('http://localhost:3001/expenses')
+      .then((response) => setExpenses(response.data))
+      .catch((error) => console.error(error));
+  }, []);
 
   // Calculate total expenses
   const totalExpenses = expenses.reduce((total, expense) => total + expense.amount, 0);
@@ -29,7 +20,7 @@ const Dashboard = () => {
   return (
     <div className="container mx-auto p-6">
       {/* Summary Section */}
-      <TotalExpenses total={totalExpenses}/>
+      <TotalExpenses total={totalExpenses} />
 
       {/* Recent Expenses Section */}
       <div className="bg-white p-6 rounded-lg shadow-md mb-6">
@@ -41,6 +32,7 @@ const Dashboard = () => {
               <th className="px-4 py-2">Category</th>
               <th className="px-4 py-2">Description</th>
               <th className="px-4 py-2">Amount</th>
+              <th className="px-4 py-2">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -50,6 +42,23 @@ const Dashboard = () => {
                 <td className="border px-4 py-2">{expense.category}</td>
                 <td className="border px-4 py-2">{expense.description}</td>
                 <td className="border px-4 py-2">${expense.amount}</td>
+                <td className="border px-4 py-2 flex items-center justify-center">
+                  {/* Edit button */}
+                  <Link
+                    to={`/edit/${expense.id}`}
+                    className="bg-blue-600 text-white px-3 py-1 rounded mr-2 w-20 text-center"
+                  >
+                    Edit
+                  </Link>
+                  
+                  {/* Delete button */}
+                  <Link
+                    to={`/delete/${expense.id}`}
+                    className="bg-red-600 text-white px-3 py-1 rounded w-20 text-center"
+                  >
+                    Delete
+                  </Link>
+                </td>
               </tr>
             ))}
           </tbody>
