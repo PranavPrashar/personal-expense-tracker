@@ -1,0 +1,176 @@
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
+import Modal from "../components/ConfirmModal"
+
+function EditExpense() {
+  const { id } = useParams(); // Get the expense ID from the URL
+  const [errors, setErrors] = useState({}); // Error state
+  const [expense, setExpense] = useState({
+    description: "",
+    amount: "",
+    category: "",
+    paymentMethod: "",
+    date: "",
+  });
+  const navigate = useNavigate(); // For navigation after the update
+  const [isModalOpen, setIsModalOpen] = useState(false); // Modal visibility state
+
+  useEffect(() => {
+    // Fetch the expense details by ID when the component mounts
+    axios
+      .get(`http://localhost:3001/expenses/${id}`)
+      .then((response) => {
+        console.log("Expense Found:", response.data);
+        setExpense(response.data);
+      })
+      .catch((error) => console.error("Error fetching expense:", error));
+  }, [id]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setExpense({ ...expense, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const newErrors = {};
+    if (!expense.description) newErrors.description = 'Description is required';
+    if (!expense.amount || parseFloat(expense.amount) <= 0) newErrors.amount = 'Valid amount is required';
+    if (!expense.category) newErrors.category = 'Category is required';
+    if (!expense.paymentMethod) newErrors.paymentMethod = 'Payment method is required';
+    if (!expense.date) newErrors.date = 'Date is required';
+
+    if (Object.keys(newErrors).length > 0) {
+        setErrors(newErrors);
+        return;
+      }
+
+    
+    // Show the modal before updating
+    setIsModalOpen(true);
+  };
+
+  const handleConfirmUpdate = async () => {
+    setIsModalOpen(false); // Close the modal
+    try {
+      // Update the expense in the database
+      await axios.put(`http://localhost:3001/expenses/${id}`, expense);
+      console.log("Expense updated successfully!");
+
+      // Redirect back to the dashboard after successful update
+      navigate('/');
+    } catch (error) {
+      console.error("Error updating expense:", error);
+    }
+  };
+
+  return (
+    <div className="container mx-auto p-6">
+      <h1 className="text-2xl font-bold mb-6">Edit Expense: {id}</h1>
+      <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md">
+        <div className="mb-4">
+          <label className="block text-gray-700" htmlFor="description">
+            Description
+          </label>
+          <input
+            type="text"
+            name="description"
+            value={expense.description}
+            onChange={handleChange}
+            className="border p-2 w-full rounded-lg"
+            placeholder="Expense description"
+            aria-required="true"
+            id="description"
+          />
+          {errors.description && <p className="text-red-500">{errors.description}</p>}
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-gray-700" htmlFor="amount">Amount</label>
+          <input
+            type="number"
+            name="amount"
+            value={expense.amount}
+            step="0.01"
+            onChange={handleChange}
+            className="border p-2 w-full rounded-lg"
+            placeholder="Enter amount"
+            min={0}
+            aria-required="true"
+            id="amount"
+          />
+          {errors.amount && <p className="text-red-500">{errors.amount}</p>}
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-gray-700" htmlFor="category">Category</label>
+          <select
+            name="category"
+            value={expense.category}
+            onChange={handleChange}
+            className="border p-2 w-full rounded-lg"
+            aria-required="true"
+            id="category"
+          >
+            <option value="" disabled>Select Category</option>
+            <option value="Food">Food</option>
+            <option value="Transportation">Transportation</option>
+            <option value="Entertainment">Entertainment</option>
+          </select>
+          {errors.category && <p className="text-red-500">{errors.category}</p>}
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-gray-700" htmlFor="paymentMethod">Payment Method</label>
+          <select
+            name="paymentMethod"
+            value={expense.paymentMethod}
+            onChange={handleChange}
+            className="border p-2 w-full rounded-lg"
+            id="paymentMethod"
+            aria-required="true"
+          >
+            <option value="" disabled>Select Payment Method</option>
+            <option value="Credit Card">Credit Card</option>
+            <option value="Cash">Cash</option>
+            <option value="Debit Card">Debit Card</option>
+          </select>
+          {errors.paymentMethod && <p className="text-red-500">{errors.paymentMethod}</p>}
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-gray-700" htmlFor="date">Date</label>
+          <input
+            type="date"
+            name="date"
+            value={expense.date}
+            onChange={handleChange}
+            className="border p-2 w-full rounded-lg"
+            aria-required="true"
+            id="date"
+          />
+          {errors.date && <p className="text-red-500">{errors.date}</p>}
+        </div>
+                
+        <button
+          type="submit"
+          className="bg-blue-600 text-white px-6 py-2 rounded-lg shadow hover:bg-blue-500"
+          aria-label="Update Expenses"
+        >
+          Update Expense
+        </button>
+      </form>
+
+      {/* Modal Component */}
+      <Modal 
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={handleConfirmUpdate}
+      />
+    </div>
+  );
+}
+
+export default EditExpense;
