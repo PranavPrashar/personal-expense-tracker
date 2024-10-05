@@ -8,12 +8,22 @@ const AddExpense = () => {
   const [category, setCategory] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('');
   const [date, setDate] = useState('');
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const newErrors = {};
     // Create a new expense object
+
+    if (!description) newErrors.description = 'Description is required';
+    if (!amount || parseFloat(amount) <= 0) newErrors.amount = 'Valid amount is required';
+
+    if (Object.keys(newErrors).length > 0) {
+        setErrors(newErrors);
+        return;
+    }
+
     const newExpense = {
       description,
       amount: parseFloat(amount),
@@ -21,6 +31,7 @@ const AddExpense = () => {
       paymentMethod,
       date,
     };
+    
 
     // Send the new expense to the server
     try {
@@ -45,6 +56,7 @@ const AddExpense = () => {
             placeholder="Expense description"
             id="description"
           />
+          {errors.description && <p className="text-red-500">{errors.description}</p>}
         </div>
 
         <div className="mb-4">
@@ -58,6 +70,7 @@ const AddExpense = () => {
             min={0}
             id="amount"
           />
+          {errors.amount && <p className="text-red-500">{errors.amount}</p>}
         </div>
 
         <div className="mb-4">
