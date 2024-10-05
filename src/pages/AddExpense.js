@@ -57,6 +57,7 @@ const AddExpense = () => {
             onChange={(e) => setDescription(e.target.value)}
             className="border p-2 w-full rounded-lg"
             placeholder="Expense description"
+            aria-required="true"
             id="description"
           />
           {errors.description && <p className="text-red-500">{errors.description}</p>}
@@ -71,6 +72,7 @@ const AddExpense = () => {
             className="border p-2 w-full rounded-lg"
             placeholder="Enter amount"
             min={0}
+            aria-required="true"
             id="amount"
           />
           {errors.amount && <p className="text-red-500">{errors.amount}</p>}
@@ -82,6 +84,7 @@ const AddExpense = () => {
             value={category}
             onChange={(e) => setCategory(e.target.value)}
             className="border p-2 w-full rounded-lg"
+            aria-required="true"
             id="category"
           >
             <option value="">Select Category</option>
@@ -99,6 +102,7 @@ const AddExpense = () => {
             onChange={(e) => setPaymentMethod(e.target.value)}
             className="border p-2 w-full rounded-lg"
             id="payment"
+            aria-required="true"
           >
             <option value="">Select Payment Method</option>
             <option value="Credit Card">Credit Card</option>
@@ -115,6 +119,7 @@ const AddExpense = () => {
             value={date}
             onChange={(e) => setDate(e.target.value)}
             className="border p-2 w-full rounded-lg"
+            aria-required="true"
             id="date"
           />
           {errors.date && <p className="text-red-500">{errors.date}</p>}
