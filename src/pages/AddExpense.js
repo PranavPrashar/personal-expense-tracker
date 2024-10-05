@@ -92,6 +92,7 @@ const AddExpense = () => {
             <option value="Rent">Rent</option>
             <option value="Transportation">Transportation</option>
             <option value="Entertainment">Entertainment</option>
+            <option value="Other">Other</option>
           </select>
           {errors.category && <p className="text-red-500">{errors.category}</p>}
         </div>
