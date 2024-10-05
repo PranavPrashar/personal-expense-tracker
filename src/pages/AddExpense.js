@@ -18,6 +18,9 @@ const AddExpense = () => {
 
     if (!description) newErrors.description = 'Description is required';
     if (!amount || parseFloat(amount) <= 0) newErrors.amount = 'Valid amount is required';
+    if (!category) newErrors.category = 'Category is required';
+    if (!paymentMethod) newErrors.paymentMethod = 'Payment method is required';
+    if (!date) newErrors.date = 'Date is required';
 
     if (Object.keys(newErrors).length > 0) {
         setErrors(newErrors);
@@ -43,7 +46,7 @@ const AddExpense = () => {
   };
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="container mx-auto p-6 bg-clouds rounded-lg">
       <h1 className="text-2xl font-bold mb-6">Add New Expense</h1>
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md">
         <div className="mb-4">
@@ -86,6 +89,7 @@ const AddExpense = () => {
             <option value="Transportation">Transportation</option>
             <option value="Entertainment">Entertainment</option>
           </select>
+          {errors.category && <p className="text-red-500">{errors.category}</p>}
         </div>
 
         <div className="mb-4">
@@ -101,6 +105,7 @@ const AddExpense = () => {
             <option value="Cash">Cash</option>
             <option value="Debit Card">Debit Card</option>
           </select>
+          {errors.paymentMethod && <p className="text-red-500">{errors.paymentMethod}</p>}
         </div>
 
         <div className="mb-4">
@@ -112,6 +117,7 @@ const AddExpense = () => {
             className="border p-2 w-full rounded-lg"
             id="date"
           />
+          {errors.date && <p className="text-red-500">{errors.date}</p>}
         </div>
 
         <div className="flex justify-between">
