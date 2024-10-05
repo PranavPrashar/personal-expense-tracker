@@ -175,6 +175,7 @@ function EditExpense() {
             className="border p-2 w-full rounded-lg"
             aria-required="true"
             id="date"
+            max={new Date().toISOString().split("T")[0]}
           />
           {errors.date && <p className="text-red-500">{errors.date}</p>}
         </div>
