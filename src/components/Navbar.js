@@ -7,14 +7,11 @@ const Navbar = () => {
 
   return (
     <nav className="bg-primary p-4 shadow-md sticky top-0 z-50">
-      <div className="container mx-auto flex justify-between items-center">
+      <div className="container mx-auto flex flex-col md:flex-row md:justify-between md:items-center">
         {/* Logo / Brand Name */}
-        <div className="text-white text-2xl font-bold">
+        <div className="text-white text-2xl font-bold flex flex-row w-full justify-between items-center">
           <Link to="/">Expense Tracker</Link>
-        </div>
-
-        {/* Mobile menu button (hamburger) */}
-        <div className="md:hidden">
+          <div className="md:hidden">
           <button
             onClick={() => setIsOpen(!isOpen)}
             type="button"
@@ -36,9 +33,13 @@ const Navbar = () => {
             </svg>
           </button>
         </div>
+        </div>
+
+        {/* Mobile menu button (hamburger) */}
+        
 
         {/* Navigation Links */}
-        <div className={`md:flex space-x-4 ${isOpen ? "block" : "hidden"} md:block`}>
+        <div className={`md:flex md:flex-row w-full justify-end space-x-4 ${isOpen ? "flex flex-col items-center" : "hidden"} md:block`}>
           <Link
             to="/"
             className="text-white hover:text-accent px-3 py-2 rounded-md block md:inline"
