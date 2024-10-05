@@ -16,13 +16,13 @@ function TotalExpenses({ total, expenseData }) {
     <div className="mb-6">
       <h1 className="text-3xl font-bold mb-4">Dashboard</h1>
 
-      <div className="bg-white p-6 rounded-lg shadow-md flex md:flex-row flex-col justify-between">
+      <div className="bg-white p-6 rounded-lg shadow-md flex md:flex-row md:items-start flex-col justify-between">
         <div className="md:w-1/3 flex md:flex-col md:items-start md:justify-start flex-row items-center justify-between w-full">
           <h2 className="text-xl font-bold">Total Expenses: </h2>
           <p className="text-3xl md:mt-4">${total}</p>
         </div>
 
-        <div className="md:w-1/3 md:flex-col flex-row py-4">
+        <div className="md:w-1/3 md:flex-col flex-row md:py-0 py-4">
           <h3 className="text-lg font-bold">Expenses Categorized by Type:</h3>
           <ul>
             {Object.entries(totalExpensesByCategory).map(
