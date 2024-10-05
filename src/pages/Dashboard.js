@@ -9,6 +9,7 @@ import DeleteModal from '../components/DeleteModal';
 const Dashboard = () => {
   const [expenses, setExpenses] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedExpenseId, setSelectedExpenseId] = useState(null);
 
   useEffect(() => {
     // Fetch the expenses from the server
@@ -24,14 +25,25 @@ const Dashboard = () => {
     return total + (parseFloat(expense.amount) || 0);
   }, 0);
 
-  const handleDelete = () =>{
+  const handleDelete = (expenseId) =>{
     setIsModalOpen(true)
+    setSelectedExpenseId(expenseId)
+  }
+
+  const confirmDelete = () =>{
+    axios.delete(`http://localhost:3001/expenses/${selectedExpenseId}`).then((response)=>{
+        console.log("response", response)
+    }).catch((err)=>{
+        console.log("Something went wrong!", err)
+    })
   }
 
   return (
     <div className="container mx-auto p-6">
       {/* Summary Section */}
       <TotalExpenses total={totalExpenses} />
+      
+      <p>{selectedExpenseId}</p>
 
       {/* Recent Expenses Section */}
       <div className="bg-white p-6 rounded-lg shadow-md mb-6">
@@ -64,7 +76,7 @@ const Dashboard = () => {
                   
                   {/* Delete button */}
                   <button
-                    onClick={()=>{handleDelete()}}
+                    onClick={()=>{handleDelete(expense.id)}}
                     className="bg-red-600 text-white px-3 py-1 rounded w-20 text-center"
                   >
                     Delete
@@ -88,6 +100,8 @@ const Dashboard = () => {
 
       <DeleteModal
         isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={confirmDelete}
       />
     </div>
   );
