@@ -129,6 +129,7 @@ const AddExpense = () => {
           <button
             type="submit"
             className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-500"
+            aria-label="Submit and add expense"
           >
             Add Expense
           </button>
@@ -136,6 +137,7 @@ const AddExpense = () => {
             type="button"
             className="bg-gray-600 text-white px-4 py-2 rounded-lg shadow hover:bg-gray-500"
             onClick={() => navigate('/')}
+            aria-label="Cancel and go back to dashboard"
           >
             Cancel
           </button>
