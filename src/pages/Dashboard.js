@@ -15,7 +15,11 @@ const Dashboard = () => {
   }, []);
 
   // Calculate total expenses
-  const totalExpenses = expenses.reduce((total, expense) => total + expense.amount, 0);
+
+  const totalExpenses = expenses.reduce((total, expense) => {
+    // Summing 'amount' of each expense, ensuring it's a number with parseFloat(), and defaulting to 0 if invalid or missing.
+    return total + (parseFloat(expense.amount) || 0);
+  }, 0);
 
   return (
     <div className="container mx-auto p-6">
