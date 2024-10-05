@@ -1,0 +1,41 @@
+{
+    "expenses": [
+      {
+        "id": 1,
+        "description": "Groceries",
+        "amount": 50.00,
+        "date": "2024-01-01",
+        "category": "Food",
+        "paymentMethod": "Credit Card",
+        "recurring": false
+      },
+      {
+        "id": 2,
+        "description": "Netflix Subscription",
+        "amount": 12.99,
+        "date": "2024-01-07",
+        "category": "Entertainment",
+        "paymentMethod": "Credit Card",
+        "recurring": true
+      },
+      {
+        "id": 3,
+        "description": "Monthly Rent",
+        "amount": 1200.00,
+        "date": "2024-01-05",
+        "category": "Rent",
+        "paymentMethod": "Bank Transfer",
+        "recurring": true
+      },
+      {
+        "id": 4,
+        "description": "Bus Ticket",
+        "amount": 3.00,
+        "date": "2024-01-10",
+        "category": "Transportation",
+        "paymentMethod": "Cash",
+        "recurring": false
+      }
+    ]
+  }
+  

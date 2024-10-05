@@ -1,18 +1,20 @@
-import logo from "./logo.svg";
-import "./App.css";
-import Navbar from "./components/Navbar";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Dashboard from './pages/Dashboard'; // Import Dashboard
+// import AddExpense from './pages/AddExpense';
+// import ExpenseList from './pages/ExpenseList';
+
 function App() {
   return (
     <Router>
       <Navbar />
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div className="bg-white p-6 rounded-lg shadow-lg">
-          <h1 className="text-2xl font-bold mb-4">Personal Expense Tracker</h1>
-          <p className="text-gray-700">
-            Track your daily expenses efficiently.
-          </p>
-        </div>
+      <div className="container mx-auto p-4">
+        <Routes>  {/* Use Routes instead of Switch */}
+          <Route path="/" element={<Dashboard />} />  {/* Use element instead of component */}
+          {/* <Route path="/add" element={<AddExpense />} /> */}
+          {/* <Route path="/expenses" element={<ExpenseList />} /> */}
+        </Routes>
       </div>
     </Router>
   );
