@@ -33,6 +33,7 @@ const Dashboard = () => {
   const confirmDelete = () =>{
     axios.delete(`http://localhost:3001/expenses/${selectedExpenseId}`).then((response)=>{
         console.log("response", response)
+        setIsModalOpen(false);
     }).catch((err)=>{
         console.log("Something went wrong!", err)
     })
@@ -46,9 +47,9 @@ const Dashboard = () => {
       <p>{selectedExpenseId}</p>
 
       {/* Recent Expenses Section */}
-      <div className="bg-white p-6 rounded-lg shadow-md mb-6">
+      <div className="bg-white p-6 rounded-lg shadow-md mb-6 overflow-x-auto">
         <h2 className="text-xl font-bold mb-4">Recent Expenses</h2>
-        <table className="min-w-full table-auto">
+        <table className="min-w-full table-auto ">
           <thead>
             <tr>
               <th className="px-4 py-2">Date</th>
