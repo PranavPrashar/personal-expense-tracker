@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import Dashboard from './pages/Dashboard'; // Import Dashboard
 import AddExpense from './pages/AddExpense';
 import EditExpense from './pages/EditExpense';
+import ErrorPage from './pages/error';
 // import ExpenseList from './pages/ExpenseList';
 
 function App() {
@@ -14,7 +15,7 @@ function App() {
         <Routes>  
           <Route path="/" element={<Dashboard />} />  
           <Route path="/add" element={<AddExpense />} />
-          {/* <Route path="/expenses" element={<ExpenseList />} /> */}
+          <Route path="/error" element={<ErrorPage />} />
           <Route path="/edit/:id" element={<EditExpense />} />
         </Routes>
       </div>

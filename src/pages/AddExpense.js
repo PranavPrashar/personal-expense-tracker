@@ -122,6 +122,7 @@ const AddExpense = () => {
             onChange={(e) => setDate(e.target.value)}
             className="border p-2 w-full rounded-lg"
             aria-required="true"
+            max={new Date().toISOString().split("T")[0]}
             id="date"
           />
           {errors.date && <p className="text-red-500">{errors.date}</p>}

@@ -24,7 +24,10 @@ function EditExpense() {
         console.log("Expense Found:", response.data);
         setExpense(response.data);
       })
-      .catch((error) => console.error("Error fetching expense:", error));
+      .catch((error) => {
+        console.error("Error fetching expense:", error);
+        navigate("/ErrorPage")
+      });
   }, [id]);
 
   const handleChange = (e) => {
