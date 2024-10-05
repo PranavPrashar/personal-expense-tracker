@@ -4,8 +4,11 @@ import { Link, useHistory } from 'react-router-dom';
 import TotalExpenses from '../components/TotalExpenses';
 import axios from 'axios';
 
+import DeleteModal from '../components/DeleteModal';
+
 const Dashboard = () => {
   const [expenses, setExpenses] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     // Fetch the expenses from the server
@@ -20,6 +23,10 @@ const Dashboard = () => {
     // Summing 'amount' of each expense, ensuring it's a number with parseFloat(), and defaulting to 0 if invalid or missing.
     return total + (parseFloat(expense.amount) || 0);
   }, 0);
+
+  const handleDelete = () =>{
+    setIsModalOpen(true)
+  }
 
   return (
     <div className="container mx-auto p-6">
@@ -56,12 +63,12 @@ const Dashboard = () => {
                   </Link>
                   
                   {/* Delete button */}
-                  <Link
-                    to={`/delete/${expense.id}`}
+                  <button
+                    onClick={()=>{handleDelete()}}
                     className="bg-red-600 text-white px-3 py-1 rounded w-20 text-center"
                   >
                     Delete
-                  </Link>
+                  </button>
                 </td>
               </tr>
             ))}
@@ -78,6 +85,10 @@ const Dashboard = () => {
           Add New Expense
         </Link>
       </div>
+
+      <DeleteModal
+        isOpen={isModalOpen}
+      />
     </div>
   );
 };
