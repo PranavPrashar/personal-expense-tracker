@@ -51,12 +51,6 @@ const Navbar = () => {
           >
             Add Expense
           </Link>
-          <Link
-            to="/expenses"
-            className="text-white hover:text-accent px-3 py-2 rounded-md block md:inline"
-          >
-            View Expenses
-          </Link>
         </div>
       </div>
     </nav>

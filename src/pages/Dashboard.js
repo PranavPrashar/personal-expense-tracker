@@ -1,6 +1,5 @@
-// src/pages/Dashboard.js
 import React, { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import TotalExpenses from "../components/TotalExpenses";
 import axios from "axios";
 
@@ -19,12 +18,20 @@ const Dashboard = () => {
       .catch((error) => console.error(error));
   }, []);
 
-  // Calculate total expenses
-
+  // Calculate total expenses for the entire list
   const totalExpenses = expenses.reduce((total, expense) => {
-    // Summing 'amount' of each expense, ensuring it's a number with parseFloat(), and defaulting to 0 if invalid or missing.
     return total + (parseFloat(expense.amount) || 0);
   }, 0);
+
+  // Calculate total expenses per category
+  const totalExpensesByCategory = expenses.reduce((totals, expense) => {
+    const { category } = expense;
+    if (!totals[category]) {
+      totals[category] = 0;
+    }
+    totals[category] += parseFloat(expense.amount) || 0;
+    return totals;
+  }, {});
 
   const handleDelete = (expenseId) => {
     setIsModalOpen(true);
@@ -34,12 +41,8 @@ const Dashboard = () => {
   const confirmDelete = () => {
     axios
       .delete(`http://localhost:3001/expenses/${selectedExpenseId}`)
-      .then((response) => {
-        console.log("response", response);
-        setExpenses(expenses.filter((expense)=>{
-            // filted out the expenses and return only ones which are not the same as the id we deleted
-            return expense.id != selectedExpenseId;
-        }))
+      .then(() => {
+        setExpenses(expenses.filter((expense) => expense.id !== selectedExpenseId));
         setIsModalOpen(false);
       })
       .catch((err) => {
@@ -50,13 +53,27 @@ const Dashboard = () => {
   return (
     <div className="container mx-auto p-6">
       {/* Summary Section */}
-      <TotalExpenses total={totalExpenses} />
+      <div className="mb-6">
+        <TotalExpenses total={totalExpenses} />
+
+        {/* Display categorized totals */}
+        <div className="bg-white p-6 rounded-lg shadow-md mb-6">
+          <h3 className="text-lg font-bold">Expenses Categorized by Type</h3>
+          <ul>
+            {Object.entries(totalExpensesByCategory).map(([category, total]) => (
+              <li key={category} className="mt-2">
+                <span className="font-semibold">{category}:</span> ${total.toFixed(2)}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
 
       {/* Recent Expenses Section */}
       <div className="bg-white p-6 rounded-lg shadow-md mb-6 overflow-x-auto">
         <h2 className="text-xl font-bold mb-4">Recent Expenses</h2>
-        <table className="min-w-full table-auto ">
-          <thead>
+        <table className="min-w-full table-auto">
+          <thead className="text-bold bg-clouds">
             <tr>
               <th className="px-4 py-2">Date</th>
               <th className="px-4 py-2">Category</th>
@@ -72,7 +89,7 @@ const Dashboard = () => {
                 <td className="border px-4 py-2">{expense.category}</td>
                 <td className="border px-4 py-2">{expense.description}</td>
                 <td className="border px-4 py-2">${expense.amount}</td>
-                <td className="border px-4 py-2  flex items-center justify-center">
+                <td className="border px-4 py-2 flex items-center justify-center">
                   {/* Edit button */}
                   <Link
                     to={`/edit/${expense.id}`}
