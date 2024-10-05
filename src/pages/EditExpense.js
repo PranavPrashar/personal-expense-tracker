@@ -26,7 +26,7 @@ function EditExpense() {
       })
       .catch((error) => {
         console.error("Error fetching expense:", error);
-        navigate("/ErrorPage")
+        navigate("/error")
       });
   }, [id]);
 

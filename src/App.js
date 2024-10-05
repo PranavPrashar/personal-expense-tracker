@@ -17,6 +17,8 @@ function App() {
           <Route path="/add" element={<AddExpense />} />
           <Route path="/error" element={<ErrorPage />} />
           <Route path="/edit/:id" element={<EditExpense />} />
+           {/* Wildcard route to handle invalid URLs */}
+           <Route path="*" element={<ErrorPage message={"The page your trying to reach does not exist"}/>} />
         </Routes>
       </div>
     </Router>
