@@ -204,7 +204,7 @@ const Dashboard = () => {
                 {(selectedCategory !== "All" || startDate || endDate) && (
                   <button
                     onClick={clearFilters}
-                    className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-500"
+                    className="bg-primary text-white px-4 py-2 rounded-lg shadow hover:bg-primarylight"
                   >
                     Clear Filters
                   </button>
@@ -246,7 +246,7 @@ const Dashboard = () => {
                       >
                         <Link
                           to={`/edit/${expense.id}`}
-                          className="bg-blue-600 text-white p-2 rounded-full mr-2 text-center flex items-center justify-center"
+                          className="bg-primary text-white p-2 rounded-full mr-2 text-center flex items-center justify-center hover:bg-primarylight"
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -277,7 +277,7 @@ const Dashboard = () => {
                           onClick={() => {
                             handleDelete(expense.id);
                           }}
-                          className="bg-red-600 text-white p-2 rounded-full text-center flex items-center justify-center"
+                          className="bg-red-600 text-white p-2 rounded-full text-center flex items-center justify-center hover:bg-red-500"
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -313,7 +313,7 @@ const Dashboard = () => {
           <button
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
             disabled={currentPage === 1}
-            className="px-4 py-2 mx-2 bg-blue-600 text-white rounded disabled:opacity-50"
+            className="px-4 py-2 mx-2 bg-primary text-white rounded disabled:opacity-50 hover:bg-primarylight"
           >
             Previous
           </button>
@@ -325,7 +325,7 @@ const Dashboard = () => {
               onClick={() => setCurrentPage(index + 1)}
               className={`px-4 py-2 mx-1 rounded ${
                 currentPage === index + 1
-                  ? "bg-blue-600 text-white"
+                  ? "bg-primary text-white"
                   : "bg-gray-200"
               }`}
             >
@@ -338,7 +338,7 @@ const Dashboard = () => {
               setCurrentPage((prev) => Math.min(prev + 1, totalPages))
             }
             disabled={currentPage === totalPages}
-            className="px-4 py-2 mx-2 bg-blue-600 text-white rounded disabled:opacity-50"
+            className="px-4 py-2 mx-2 bg-primary text-white rounded disabled:opacity-50 hover:bg-primarylight"
           >
             Next
           </button>
@@ -349,7 +349,7 @@ const Dashboard = () => {
       <div className="text-right">
         <Link
           to="/add"
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-500"
+          className="bg-primary text-white px-4 py-2 rounded-lg shadow hover:bg-primarylight"
         >
           Add New Expense
         </Link>
