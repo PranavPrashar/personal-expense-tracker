@@ -44,6 +44,7 @@ const AddExpense = () => {
       navigate('/'); // Redirect back to the dashboard after submission
     } catch (error) {
       console.error('Error adding expense:', error);
+      navigate("/error");
     }
   };
 
