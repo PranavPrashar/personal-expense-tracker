@@ -40,25 +40,27 @@ const Dashboard = () => {
     setEndDate("");
   };
 
-  // Filter Logic
-  const filteredExpenses = expenses.filter((expense) => {
-    // Filter by category
-    if (selectedCategory !== "All" && expense.category !== selectedCategory) {
-      return false;
-    }
+  // Filter and Sort Logic
+  const filteredExpenses = expenses
+    .filter((expense) => {
+      // Filter by category
+      if (selectedCategory !== "All" && expense.category !== selectedCategory) {
+        return false;
+      }
 
-    // Filter by start date
-    if (startDate && new Date(expense.date) < new Date(startDate)) {
-      return false;
-    }
+      // Filter by start date
+      if (startDate && new Date(expense.date) < new Date(startDate)) {
+        return false;
+      }
 
-    // Filter by end date
-    if (endDate && new Date(expense.date) > new Date(endDate)) {
-      return false;
-    }
+      // Filter by end date
+      if (endDate && new Date(expense.date) > new Date(endDate)) {
+        return false;
+      }
 
-    return true;
-  });
+      return true;
+    })
+    .sort((a, b) => new Date(b.date) - new Date(a.date)); // Sort by descending date
 
   // Pagination logic
   const totalPages = Math.ceil(filteredExpenses.length / itemsPerPage);
@@ -99,7 +101,6 @@ const Dashboard = () => {
           expenseData={filteredExpenses}
         />
 
-        {/* Filter Section with Toggle */}
         {/* Filter Section with Toggle */}
         <div className="bg-white p-6 rounded-lg shadow-md mb-6">
           <div className="flex justify-between items-center">
@@ -173,7 +174,6 @@ const Dashboard = () => {
                     <option value="Rent">Rent</option>
                     <option value="Entertainment">Entertainment</option>
                     <option value="Transportation">Transportation</option>
-                    {/* Add more categories as needed */}
                   </select>
                 </div>
 
