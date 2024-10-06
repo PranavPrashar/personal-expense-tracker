@@ -16,6 +16,8 @@ function EditExpense() {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
+
+  
   useEffect(() => {
     axios
       .get(`${apiUrl}/expenses/${id}`)
