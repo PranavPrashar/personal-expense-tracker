@@ -40,32 +40,40 @@ const Dashboard = () => {
     setEndDate("");
   };
 
-  // Filter and Sort Logic
-  const filteredExpenses = expenses
-    .filter((expense) => {
-      // Filter by category
-      if (selectedCategory !== "All" && expense.category !== selectedCategory) {
-        return false;
-      }
+  // Filter Logic
+  const filteredExpenses = expenses.filter((expense) => {
+    // Filter by category
+    if (selectedCategory !== "All" && expense.category !== selectedCategory) {
+      return false;
+    }
 
-      // Filter by start date
-      if (startDate && new Date(expense.date) < new Date(startDate)) {
-        return false;
-      }
+    // Filter by start date
+    if (startDate && new Date(expense.date) < new Date(startDate)) {
+      return false;
+    }
 
-      // Filter by end date
-      if (endDate && new Date(expense.date) > new Date(endDate)) {
-        return false;
-      }
+    // Filter by end date
+    if (endDate && new Date(expense.date) > new Date(endDate)) {
+      return false;
+    }
 
-      return true;
-    })
-    .sort((a, b) => new Date(b.date) - new Date(a.date)); // Sort by descending date
+    return true;
+  });
+
+  // Sort expenses for the table (Newest first)
+  const sortedExpensesForTable = [...filteredExpenses].sort(
+    (a, b) => new Date(b.date) - new Date(a.date)
+  );
+
+  // Sort expenses for the chart (Oldest first)
+  const sortedExpensesForChart = [...filteredExpenses].sort(
+    (a, b) => new Date(a.date) - new Date(b.date)
+  );
 
   // Pagination logic
-  const totalPages = Math.ceil(filteredExpenses.length / itemsPerPage);
+  const totalPages = Math.ceil(sortedExpensesForTable.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentExpenses = filteredExpenses.slice(
+  const currentExpenses = sortedExpensesForTable.slice(
     startIndex,
     startIndex + itemsPerPage
   );
@@ -93,12 +101,13 @@ const Dashboard = () => {
     <div className="container mx-auto p-6">
       {/* Summary Section */}
       <div className="mb-6">
+        {/* Pass sorted expenses for the chart */}
         <TotalExpenses
-          total={filteredExpenses.reduce(
+          total={sortedExpensesForChart.reduce(
             (total, expense) => total + (parseFloat(expense.amount) || 0),
             0
           )}
-          expenseData={filteredExpenses}
+          expenseData={sortedExpensesForChart} // Use the sorted data for chart (oldest to newest)
         />
 
         {/* Filter Section with Toggle */}
@@ -218,7 +227,7 @@ const Dashboard = () => {
           </AnimatePresence>
         </div>
 
-        {/* Recent Expenses Section */}
+        {/* Recent Expenses Section (Sorted newest to oldest) */}
         <div className="bg-white p-6 rounded-lg shadow-md mb-6 overflow-x-auto">
           <h2 className="text-xl font-bold mb-4">Recent Expenses</h2>
           <table className="min-w-full table-auto">
