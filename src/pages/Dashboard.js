@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import TotalExpenses from "../components/TotalExpenses";
 import axios from "axios";
-
 import DeleteModal from "../components/DeleteModal";
+
+import { motion, AnimatePresence } from "framer-motion";
 
 const Dashboard = () => {
   const [expenses, setExpenses] = useState([]);
@@ -95,6 +96,7 @@ const Dashboard = () => {
         />
 
         {/* Filter Section with Toggle */}
+        {/* Filter Section with Toggle */}
         <div className="bg-white p-6 rounded-lg shadow-md mb-6">
           <div className="flex justify-between items-center">
             <h2 className="text-xl font-bold">Filter Expenses</h2>
@@ -138,71 +140,78 @@ const Dashboard = () => {
                     d="m4.5 5.25 7.5 7.5 7.5-7.5m-15 6 7.5 7.5 7.5-7.5"
                   />
                 </svg>
-              )}{" "}
-              {/* Change arrow based on open state */}
+              )}
             </button>
           </div>
 
-          {/* Conditionally Render the Filter Controls */}
-          {isFilterOpen && (
-            <div className="mt-4">
-              <div className="mb-4">
-                {/* Category Filter */}
-                <label className="block text-sm font-medium text-gray-700">
-                  Category
-                </label>
-                <select
-                  className="mt-1 block w-full p-2 border rounded-md"
-                  value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value)}
-                >
-                  <option value="All">All Categories</option>
-                  <option value="Food">Food</option>
-                  <option value="Rent">Rent</option>
-                  <option value="Entertainment">Entertainment</option>
-                  <option value="Transportation">Transportation</option>
-                  {/* Add more categories as needed */}
-                </select>
-              </div>
+          {/* Animate Filter Controls */}
+          <AnimatePresence>
+            {isFilterOpen && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="overflow-hidden mt-4"
+              >
+                <div className="mb-4">
+                  {/* Category Filter */}
+                  <label className="block text-sm font-medium text-gray-700">
+                    Category
+                  </label>
+                  <select
+                    className="mt-1 block w-full p-2 border rounded-md"
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                  >
+                    <option value="All">All Categories</option>
+                    <option value="Food">Food</option>
+                    <option value="Rent">Rent</option>
+                    <option value="Entertainment">Entertainment</option>
+                    <option value="Transportation">Transportation</option>
+                    {/* Add more categories as needed */}
+                  </select>
+                </div>
 
-              <div className="mb-4">
-                {/* Start Date Filter */}
-                <label className="block text-sm font-medium text-gray-700">
-                  Start Date
-                </label>
-                <input
-                  type="date"
-                  className="mt-1 block w-full p-2 border rounded-md"
-                  value={startDate}
-                  onChange={(e) => setStartDate(e.target.value)}
-                  max={endDate}
-                />
-              </div>
+                <div className="mb-4">
+                  {/* Start Date Filter */}
+                  <label className="block text-sm font-medium text-gray-700">
+                    Start Date
+                  </label>
+                  <input
+                    type="date"
+                    className="mt-1 block w-full p-2 border rounded-md"
+                    value={startDate}
+                    onChange={(e) => setStartDate(e.target.value)}
+                    max={endDate}
+                  />
+                </div>
 
-              <div className="mb-4">
-                {/* End Date Filter */}
-                <label className="block text-sm font-medium text-gray-700">
-                  End Date
-                </label>
-                <input
-                  type="date"
-                  className="mt-1 block w-full p-2 border rounded-md"
-                  value={endDate}
-                  onChange={(e) => setEndDate(e.target.value)}
-                  min={startDate}
-                />
-              </div>
+                <div className="mb-4">
+                  {/* End Date Filter */}
+                  <label className="block text-sm font-medium text-gray-700">
+                    End Date
+                  </label>
+                  <input
+                    type="date"
+                    className="mt-1 block w-full p-2 border rounded-md"
+                    value={endDate}
+                    onChange={(e) => setEndDate(e.target.value)}
+                    min={startDate}
+                  />
+                </div>
 
-              {(selectedCategory !== "All" || startDate || endDate) && (
-                <button
-                  onClick={clearFilters}
-                  className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-500"
-                >
-                  Clear Filters
-                </button>
-              )}
-            </div>
-          )}
+                {(selectedCategory !== "All" || startDate || endDate) && (
+                  <button
+                    onClick={clearFilters}
+                    className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-500"
+                  >
+                    Clear Filters
+                  </button>
+                )}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         {/* Recent Expenses Section */}
@@ -228,48 +237,64 @@ const Dashboard = () => {
                     <td className="border px-4 py-2">{expense.description}</td>
                     <td className="border px-4 py-2 flex items-center justify-center">
                       {/* Edit button */}
-                      <Link
-                        to={`/edit/${expense.id}`}
-                        className="bg-blue-600 text-white p-2 rounded-full mr-2 text-center flex items-center justify-center"
+                      <motion.div
+                        whileHover={{ scale: 1.1 }} // Scale up on hover
+                        whileTap={{ scale: 0.9 }} // Scale down on click (tap)
+                        initial={{ opacity: 0 }} // Initial state
+                        animate={{ opacity: 1 }} // Animate when the button first appears
+                        transition={{ duration: 0.3 }} // Smooth transition
                       >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth={1.5}
-                          stroke="currentColor"
-                          className="w-4 h-4"
+                        <Link
+                          to={`/edit/${expense.id}`}
+                          className="bg-blue-600 text-white p-2 rounded-full mr-2 text-center flex items-center justify-center"
                         >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
-                          />
-                        </svg>
-                      </Link>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            className="w-4 h-4"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
+                            />
+                          </svg>
+                        </Link>
+                      </motion.div>
 
-                      {/* Delete button */}
-                      <button
-                        onClick={() => {
-                          handleDelete(expense.id);
-                        }}
-                        className="bg-red-600 text-white p-2 rounded-full text-center flex items-center justify-center"
+                      <motion.div
+                        whileHover={{ scale: 1.1 }} // Scale up on hover
+                        whileTap={{ scale: 0.9 }} // Scale down on click (tap)
+                        initial={{ opacity: 0 }} // Initial state
+                        animate={{ opacity: 1 }} // Animate when the button first appears
+                        transition={{ duration: 0.3 }} // Smooth transition
                       >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth={1.5}
-                          stroke="currentColor"
-                          className="w-4 h-4"
+                        {/* Delete button */}
+                        <button
+                          onClick={() => {
+                            handleDelete(expense.id);
+                          }}
+                          className="bg-red-600 text-white p-2 rounded-full text-center flex items-center justify-center"
                         >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M6 18L18 6M6 6l12 12"
-                          />
-                        </svg>
-                      </button>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            className="w-4 h-4"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M6 18L18 6M6 6l12 12"
+                            />
+                          </svg>
+                        </button>
+                      </motion.div>
                     </td>
                   </tr>
                 ))
