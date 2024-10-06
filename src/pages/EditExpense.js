@@ -15,10 +15,10 @@ function EditExpense() {
   });
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const apiUrl = process.env.REACT_APP_API_BASE_URL;
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/expenses/${id}`)
+      .get(`${apiUrl}/expenses/${id}`)
       .then((response) => {
         setExpense(response.data);
       })
@@ -55,7 +55,7 @@ function EditExpense() {
   const handleConfirmUpdate = async () => {
     setIsModalOpen(false);
     try {
-      await axios.put(`http://localhost:3001/expenses/${id}`, expense);
+      await axios.put(`${apiUrl}/expenses/${id}`, expense);
       navigate("/");
     } catch (error) {
       console.error("Error updating expense:", error);

@@ -21,11 +21,12 @@ const Dashboard = () => {
 
   // State to track whether the filter section is open or closed
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const apiUrl = process.env.REACT_APP_API_BASE_URL;
 
   useEffect(() => {
     // Fetch the expenses from the server
     axios
-      .get("http://localhost:3001/expenses")
+      .get(`${apiUrl}/expenses`)
       .then((response) => setExpenses(response.data))
       .catch((error) => console.error(error));
   }, []);
@@ -71,7 +72,7 @@ const Dashboard = () => {
 
   const confirmDelete = () => {
     axios
-      .delete(`http://localhost:3001/expenses/${selectedExpenseId}`)
+      .delete(`${apiUrl}/expenses/${selectedExpenseId}`)
       .then(() => {
         setExpenses(
           expenses.filter((expense) => expense.id !== selectedExpenseId)
