@@ -11,6 +11,8 @@ const AddExpense = () => {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
+  const apiUrl = process.env.REACT_APP_API_BASE_URL;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = {};
@@ -38,7 +40,7 @@ const AddExpense = () => {
 
     // Send the new expense to the server
     try {
-      await axios.post('http://localhost:3001/expenses', newExpense);
+      await axios.post(`${apiUrl}/expenses`, newExpense);
       navigate('/'); // Redirect back to the dashboard after submission
     } catch (error) {
       console.error('Error adding expense:', error);
