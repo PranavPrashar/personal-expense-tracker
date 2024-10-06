@@ -4,8 +4,8 @@ import axios from "axios";
 import Modal from "../components/ConfirmModal";
 
 function EditExpense() {
-  const { id } = useParams(); // Get the expense ID from the URL
-  const [errors, setErrors] = useState({}); // Error state
+  const { id } = useParams();
+  const [errors, setErrors] = useState({});
   const [expense, setExpense] = useState({
     description: "",
     amount: "",
@@ -13,20 +13,18 @@ function EditExpense() {
     paymentMethod: "",
     date: "",
   });
-  const navigate = useNavigate(); // For navigation after the update
-  const [isModalOpen, setIsModalOpen] = useState(false); // Modal visibility state
+  const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    // Fetch the expense details by ID when the component mounts
     axios
       .get(`http://localhost:3001/expenses/${id}`)
       .then((response) => {
-        console.log("Expense Found:", response.data);
         setExpense(response.data);
       })
       .catch((error) => {
         console.error("Error fetching expense:", error);
-        navigate("/error")
+        navigate("/error");
       });
   }, [id]);
 
@@ -37,7 +35,6 @@ function EditExpense() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const newErrors = {};
     if (!expense.description) newErrors.description = "Description is required";
     if (!expense.amount || parseFloat(expense.amount) <= 0)
@@ -52,18 +49,13 @@ function EditExpense() {
       return;
     }
 
-    // Show the modal before updating
     setIsModalOpen(true);
   };
 
   const handleConfirmUpdate = async () => {
-    setIsModalOpen(false); // Close the modal
+    setIsModalOpen(false);
     try {
-      // Update the expense in the database
       await axios.put(`http://localhost:3001/expenses/${id}`, expense);
-      console.log("Expense updated successfully!");
-
-      // Redirect back to the dashboard after successful update
       navigate("/");
     } catch (error) {
       console.error("Error updating expense:", error);
@@ -92,7 +84,9 @@ function EditExpense() {
             id="description"
           />
           {errors.description && (
-            <p className="text-red-500">{errors.description}</p>
+            <p className="text-red-500" role="alert">
+              {errors.description}
+            </p>
           )}
         </div>
 
@@ -112,7 +106,11 @@ function EditExpense() {
             aria-required="true"
             id="amount"
           />
-          {errors.amount && <p className="text-red-500">{errors.amount}</p>}
+          {errors.amount && (
+            <p className="text-red-500" role="alert">
+              {errors.amount}
+            </p>
+          )}
         </div>
 
         <div className="mb-4">
@@ -136,7 +134,11 @@ function EditExpense() {
             <option value="Entertainment">Entertainment</option>
             <option value="Other">Other</option>
           </select>
-          {errors.category && <p className="text-red-500">{errors.category}</p>}
+          {errors.category && (
+            <p className="text-red-500" role="alert">
+              {errors.category}
+            </p>
+          )}
         </div>
 
         <div className="mb-4">
@@ -159,7 +161,9 @@ function EditExpense() {
             <option value="Debit Card">Debit Card</option>
           </select>
           {errors.paymentMethod && (
-            <p className="text-red-500">{errors.paymentMethod}</p>
+            <p className="text-red-500" role="alert">
+              {errors.paymentMethod}
+            </p>
           )}
         </div>
 
@@ -177,20 +181,25 @@ function EditExpense() {
             id="date"
             max={new Date().toISOString().split("T")[0]}
           />
-          {errors.date && <p className="text-red-500">{errors.date}</p>}
+          {errors.date && (
+            <p className="text-red-500" role="alert">
+              {errors.date}
+            </p>
+          )}
         </div>
 
         <button
           type="submit"
           className="bg-primary text-white px-6 py-2 rounded-lg shadow hover:bg-primarylight"
-          aria-label="Update Expenses"
+          aria-label="Update Expense"
         >
           Update Expense
         </button>
+
         <button
-          type="submit"
+          type="button" // Update this to 'button'
           className="bg-red-600 hover:bg-red-500 text-white px-6 py-2 rounded-lg shadow hover:bg-blue-500 mx-4"
-          aria-label="Update Expenses"
+          aria-label="Cancel Update"
           onClick={() => {
             navigate("/");
           }}
