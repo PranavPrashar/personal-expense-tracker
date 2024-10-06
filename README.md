@@ -1,70 +1,180 @@
-# Getting Started with Create React App
+# Personal Expense Tracker
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a personal expense tracking application built with React and `json-server` for the backend API.
 
-## Available Scripts
+## Getting Started
 
-In the project directory, you can run:
+### Prerequisites
 
-### `npm start`
+Before you start, make sure you have:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Node.js** (version 18.x or higher)
+- **npm** (comes with Node.js)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+## Features
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Add, Edit, Delete Expenses**: Manage your personal expenses with ease.
+- **View Total Expenses**: Get an overview of your total expenses.
+- **Advanced Filtering**: Filter expenses by:
+  - Category
+  - Date
+  - Payment method
+- **Data Visualizations**: Visualize your expenses through:
+  - Pie charts
+  - Line charts (expenses over time)
+- **Animations with Framer Motion**: Smooth transitions and animations for a better user experience.
+- **Responsive Design**: Optimized for both desktop and mobile devices.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Installation
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Clone the repository
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```bash
+  git clone https://github.com/PranavPrashar/personal-expense-tracker
+  cd personal-expense-tracker
+```
 
-## Learn More
+Install the dependencies:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+  npm install
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Set up the backend using json-server. This will run the backend on http://localhost:3001.:
 
-### Code Splitting
+```bash
+  npm run json-server
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Set up environment variables:
+*Create a .env file in the root folder with the following content:*
+REACT_APP_API_BASE_URL=http://localhost:3001
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
+    
+## Running the Application
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Start the React application:
 
-### Advanced Configuration
+```bash
+  npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+**Open your browser and navigate to http://localhost:3000 to see the application running.**
 
-### Deployment
+### API
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+The backend API is served by `json-server`. It runs on `http://localhost:3001` and exposes the following routes:
 
-### `npm run build` fails to minify
+- `GET /expenses`: Returns all expenses.
+- `POST /expenses`: Creates a new expense.
+- `PUT /expenses/:id`: Updates an existing expense by ID.
+- `DELETE /expenses/:id`: Deletes an expense by ID.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+## Tech Stack
+
+**Client:** React, React Router, Axios, Framer Motion, Chart.js, React-Chartjs-2, TailwindCSS
+
+**Server:** JSON Server (mock API)
+## Optional Features
+
+### Animations with Framer Motion:
+The application uses **Framer Motion** to add subtle animations to elements like buttons, modals, and filters.
+
+- **Buttons** scale slightly when hovered or clicked, adding a nice interactive feel.
+- **Filters** can slide in and out smoothly when toggled.
+
+These animations improve the user experience and make the interface more engaging.
+
+### Advanced Filtering:
+Users can filter expenses by:
+
+- **Date range**
+- **Category**
+- **Payment method**
+
+This allows for a more focused view of expenses based on the user's needs.
+
+### Charts & Data Visualization:
+The application integrates **Chart.js** with **react-chartjs-2** to provide visualizations of the expense data.
+
+- A **pie chart** shows expenses broken down by category.
+- A **line chart** displays expenses over time, allowing users to see trends in their spending habits.
+## Initial Data Setup
+
+You can use the following sample data to populate your `db.json` file. This will simulate some initial expenses for testing purposes:
+
+**Add this data to your db.json file, which will serve as your mock database.**
+
+```json
+{
+  "expenses": [
+    {
+      "id": "1",
+      "description": "Groceries",
+      "amount": "150",
+      "date": "2024-01-01",
+      "category": "Food",
+      "paymentMethod": "Credit Card",
+      "recurring": false
+    },
+    {
+      "id": "2",
+      "description": "Netflix Subscription",
+      "amount": "15.99",
+      "date": "2024-01-05",
+      "category": "Entertainment",
+      "paymentMethod": "Credit Card",
+      "recurring": true
+    },
+    {
+      "id": "3",
+      "description": "Monthly Rent",
+      "amount": "1200",
+      "date": "2024-01-01",
+      "category": "Rent",
+      "paymentMethod": "Bank Transfer",
+      "recurring": true
+    },
+    {
+      "id": "4",
+      "description": "Bus Ticket",
+      "amount": "2.50",
+      "date": "2024-01-10",
+      "category": "Transportation",
+      "paymentMethod": "Cash",
+      "recurring": false
+    }
+  ]
+}
+```
+## Assumptions Made:
+
+1. **Categories**: It is assumed that expenses fall into the following predefined categories:
+   - Food
+   - Entertainment
+   - Rent
+   - Transportation  
+   These are hardcoded categories, and the current system does not support dynamically adding or managing custom categories.
+
+2. **Payment Methods**: Expenses can be associated with the following predefined payment methods:
+   - Credit Card
+   - Cash
+   - Debit Card  
+   These payment methods are also static and cannot be customized by the user.
+
+3. **No Authentication**: This application is a simple expense tracker and assumes no need for user authentication or authorization for accessing or modifying the expense data.
+
+4. **Backend**: The project assumes that the backend API is served locally by `json-server` running on `http://localhost:3001`, with the API URL stored in the environment variable `REACT_APP_API_BASE_URL`.
+
+5. **Currency**: It is assumed that the application will be used in regions that use the US Dollar (`$`) as the primary currency. Currently, there is no support for multiple currencies or currency conversion.
+
