@@ -6,7 +6,10 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-primary p-4 shadow-md sticky top-0 z-50">
+    <nav
+      className="bg-primary p-4 shadow-md sticky top-0 z-50"
+      aria-label="Main navigation"
+    >
       <div className="container mx-auto flex flex-col md:flex-row md:justify-between md:items-center">
         {/* Logo / Brand Name */}
         <div className="text-white text-2xl font-bold flex flex-row w-full justify-between items-center">
@@ -18,10 +21,9 @@ const Navbar = () => {
               onClick={() => setIsOpen(!isOpen)}
               type="button"
               className="text-white focus:outline-none"
-              aria-label={
-                isOpen ? "Close navigation menu" : "Open navigation menu"
-              }
-              aria-expanded={isOpen}
+              aria-controls="navbar-menu" 
+              aria-expanded={isOpen} 
+              aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
             >
               <svg
                 className="w-6 h-6"
@@ -44,17 +46,17 @@ const Navbar = () => {
         </div>
 
         {/* Mobile menu button (hamburger) */}
-
-        {/* Navigation Links */}
         <div
+          id="navbar-menu" 
           className={`md:flex md:flex-row w-full justify-end space-x-4 ${
             isOpen ? "flex flex-col items-center" : "hidden"
           } md:block`}
-          aria-label="Navigation Links"
+          role="menu" 
         >
           <Link
             to="/"
             className="text-white hover:text-accent px-3 py-2 rounded-md block md:inline"
+            role="menuitem" // Each link as a menu item
             aria-label="Go to Home page"
           >
             Home
@@ -62,6 +64,7 @@ const Navbar = () => {
           <Link
             to="/add"
             className="text-white hover:text-accent px-3 py-2 rounded-md block md:inline"
+            role="menuitem"
             aria-label="Go to Add Expense page"
           >
             Add Expense
