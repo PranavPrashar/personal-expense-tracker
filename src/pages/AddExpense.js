@@ -52,7 +52,7 @@ const AddExpense = () => {
       <h1 className="text-2xl font-bold mb-6">Add New Expense</h1>
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md">
         <div className="mb-4">
-          <label className="block text-gray-700" htmlFor="description">Description</label>
+          <label className="block text-gray-700 required" htmlFor="description">Description</label>
           <input
             type="text"
             value={description}
@@ -66,7 +66,7 @@ const AddExpense = () => {
         </div>
 
         <div className="mb-4">
-          <label className="block text-gray-700" htmlFor="amount">Amount</label>
+          <label className="block text-gray-700 required" htmlFor="amount">Amount</label>
           <input
             type="number"
             value={amount}
@@ -81,7 +81,7 @@ const AddExpense = () => {
         </div>
 
         <div className="mb-4">
-          <label className="block text-gray-700" htmlFor="category">Category</label>
+          <label className="block text-gray-700 required" htmlFor="category">Category</label>
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
@@ -100,7 +100,7 @@ const AddExpense = () => {
         </div>
 
         <div className="mb-4">
-          <label className="block text-gray-700" htmlFor="payment">Payment Method</label>
+          <label className="block text-gray-700 required" htmlFor="payment">Payment Method</label>
           <select
             value={paymentMethod}
             onChange={(e) => setPaymentMethod(e.target.value)}
@@ -117,7 +117,7 @@ const AddExpense = () => {
         </div>
 
         <div className="mb-4">
-          <label className="block text-gray-700" htmlFor="date">Date</label>
+          <label className="block text-gray-700 required" htmlFor="date">Date</label>
           <input
             type="date"
             value={date}

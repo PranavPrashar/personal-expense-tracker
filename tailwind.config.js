@@ -8,10 +8,25 @@ module.exports = {
         black: '#34495e',
         clouds: '#ecf0f1'
       },
+      addUtilities: {
+        '.required::after': {
+          content: '" *"',
+          color: 'black',
+        },
+      },
     },
   },
   content: [
-    './src/**/*.{js,jsx,ts,tsx}', // Ensure Tailwind scans all your components
+    './src/**/*.{js,jsx,ts,tsx}', 
   ],
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }) {
+      addUtilities({
+        '.required::after': {
+          content: '" *"',
+          color: 'black',
+        },
+      });
+    }
+  ],
 };

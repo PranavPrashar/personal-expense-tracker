@@ -6,13 +6,16 @@ import DeleteModal from "../components/DeleteModal";
 
 import { motion, AnimatePresence } from "framer-motion";
 
+// Constants for filtering
+const DEFAULT_CATEGORY = "All";
+
 const Dashboard = () => {
   const [expenses, setExpenses] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedExpenseId, setSelectedExpenseId] = useState(null);
 
   // Filter States
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedCategory, setSelectedCategory] = useState(DEFAULT_CATEGORY);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
@@ -29,7 +32,7 @@ const Dashboard = () => {
       .get(`${apiUrl}/expenses`)
       .then((response) => setExpenses(response.data))
       .catch((error) => console.error(error));
-  }, []);
+  }, [apiUrl]);
 
   const clearFilters = () => {
     setSelectedCategory("All");
@@ -220,7 +223,7 @@ const Dashboard = () => {
           <h2 className="text-xl font-bold mb-4">Recent Expenses</h2>
           <table className="min-w-full table-auto">
             <thead>
-              <tr>
+              <tr className="bg-clouds">
                 <th>Date</th>
                 <th>Category</th>
                 <th>Amount</th>

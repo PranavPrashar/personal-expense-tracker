@@ -72,7 +72,7 @@ function EditExpense() {
         className="bg-white p-6 rounded-lg shadow-md"
       >
         <div className="mb-4">
-          <label className="block text-gray-700" htmlFor="description">
+          <label className="block text-gray-700 required" htmlFor="description">
             Description
           </label>
           <input
@@ -93,7 +93,7 @@ function EditExpense() {
         </div>
 
         <div className="mb-4">
-          <label className="block text-gray-700" htmlFor="amount">
+          <label className="block text-gray-700 required" htmlFor="amount">
             Amount
           </label>
           <input
@@ -116,7 +116,7 @@ function EditExpense() {
         </div>
 
         <div className="mb-4">
-          <label className="block text-gray-700" htmlFor="category">
+          <label className="block text-gray-700 required" htmlFor="category">
             Category
           </label>
           <select
@@ -144,7 +144,7 @@ function EditExpense() {
         </div>
 
         <div className="mb-4">
-          <label className="block text-gray-700" htmlFor="paymentMethod">
+          <label className="block text-gray-700 required" htmlFor="paymentMethod">
             Payment Method
           </label>
           <select
@@ -170,7 +170,7 @@ function EditExpense() {
         </div>
 
         <div className="mb-4">
-          <label className="block text-gray-700" htmlFor="date">
+          <label className="block text-gray-700 required" htmlFor="date">
             Date
           </label>
           <input
