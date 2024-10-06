@@ -1,5 +1,5 @@
 import ExpensePieChart from "./ExpensePieChart";
-
+import ExpensesOverTime from "./ExpensesOvertime";
 function TotalExpenses({ total, expenseData }) {
   const totalExpensesByCategory = expenseData.reduce((totals, expense) => {
     const { category } = expense;
@@ -25,14 +25,18 @@ function TotalExpenses({ total, expenseData }) {
         <div className="md:w-1/3 md:flex-col flex-row md:py-0 py-4">
           <h3 className="text-lg font-bold">Expenses Categorized by Type:</h3>
           <ul>
-            {Object.keys(totalExpensesByCategory).length > 0 ? Object.entries(totalExpensesByCategory).map(
-              ([category, total]) => (
-                <li key={category} className="mt-2">
-                  <span className="font-semibold">{category}:</span> $
-                  {total.toFixed(2)}
-                </li>
+            {Object.keys(totalExpensesByCategory).length > 0 ? (
+              Object.entries(totalExpensesByCategory).map(
+                ([category, total]) => (
+                  <li key={category} className="mt-2">
+                    <span className="font-semibold">{category}:</span> $
+                    {total.toFixed(2)}
+                  </li>
+                )
               )
-            ) : <li>There are currently no expenses to display.</li>}
+            ) : (
+              <li>There are currently no expenses to display.</li>
+            )}
           </ul>
         </div>
 
@@ -42,6 +46,9 @@ function TotalExpenses({ total, expenseData }) {
         >
           <ExpensePieChart expenses={expenseData} />
         </div>
+      </div>
+      <div  className="my-4">
+        <ExpensesOverTime expenses={expenseData} />
       </div>
     </div>
   );

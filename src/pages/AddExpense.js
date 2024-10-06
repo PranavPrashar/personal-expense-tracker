@@ -131,7 +131,7 @@ const AddExpense = () => {
         <div className="flex justify-between">
           <button
             type="submit"
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-500"
+            className="bg-primary text-white px-4 py-2 rounded-lg shadow hover:bg-primarylight"
             aria-label="Submit and add expense"
           >
             Add Expense
