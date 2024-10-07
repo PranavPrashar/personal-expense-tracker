@@ -48,7 +48,7 @@ const Navbar = () => {
         {/* Mobile menu button (hamburger) */}
         <div
           id="navbar-menu" 
-          className={`md:flex md:flex-row w-full justify-end space-x-4 ${
+          className={`md:flex md:flex-row w-full justify-end md:space-x-4 ${
             isOpen ? "flex flex-col items-center" : "hidden"
           } md:block`}
           role="menu" 
