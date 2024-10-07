@@ -11,7 +11,7 @@ function TotalExpenses({ total, expenseData }) {
     return totals;
   }, {});
 
-  console.log(totalExpensesByCategory);
+  // console.log(totalExpensesByCategory);
 
   return (
     <div className="mb-6">
