@@ -4,7 +4,10 @@ import axios from "axios";
 import Modal from "../components/ConfirmModal";
 
 function EditExpense() {
+  // Get the expense ID from the URL parameters
   const { id } = useParams();
+  
+  // State to manage form inputs and errors
   const [errors, setErrors] = useState({});
   const [expense, setExpense] = useState({
     description: "",
@@ -13,52 +16,64 @@ function EditExpense() {
     paymentMethod: "",
     date: "",
   });
+  
+  // Navigation hook
   const navigate = useNavigate();
+  
+  // State for modal visibility
   const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  // Base URL for API calls
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
 
-  
+  // Fetch the current expense details when the component loads
   useEffect(() => {
     axios
       .get(`${apiUrl}/expenses/${id}`)
       .then((response) => {
-        setExpense(response.data);
+        setExpense(response.data); // Populate form with expense data
       })
       .catch((error) => {
         console.error("Error fetching expense:", error);
-        navigate("/error");
+        navigate("/error"); // Redirect to error page on failure
       });
   }, [id]);
 
+  // Handle input field changes and update the state
   const handleChange = (e) => {
     const { name, value } = e.target;
     setExpense({ ...expense, [name]: value });
   };
 
+  // Form submission handler
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    // Simple validation
     const newErrors = {};
     if (!expense.description) newErrors.description = "Description is required";
     if (!expense.amount || parseFloat(expense.amount) <= 0)
       newErrors.amount = "Valid amount is required";
     if (!expense.category) newErrors.category = "Category is required";
-    if (!expense.paymentMethod)
-      newErrors.paymentMethod = "Payment method is required";
+    if (!expense.paymentMethod) newErrors.paymentMethod = "Payment method is required";
     if (!expense.date) newErrors.date = "Date is required";
 
+    // If there are errors, set them and stop the submission
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
 
+    // Open confirmation modal
     setIsModalOpen(true);
   };
 
+  // Confirm the update after modal confirmation
   const handleConfirmUpdate = async () => {
     setIsModalOpen(false);
     try {
-      await axios.put(`${apiUrl}/expenses/${id}`, expense);
-      navigate("/");
+      await axios.put(`${apiUrl}/expenses/${id}`, expense); // Send update request to the server
+      navigate("/"); // Redirect to home page after success
     } catch (error) {
       console.error("Error updating expense:", error);
     }
@@ -67,10 +82,14 @@ function EditExpense() {
   return (
     <div className="container mx-auto p-6">
       <h1 className="text-3xl font-bold mb-6">Edit Expense</h1>
+      
+      {/* Expense edit form */}
       <form
         onSubmit={handleSubmit}
         className="bg-white p-6 rounded-lg shadow-md"
+        aria-labelledby="edit-expense-form"
       >
+        {/* Description input */}
         <div className="mb-4">
           <label className="block text-gray-700 required" htmlFor="description">
             Description
@@ -92,6 +111,7 @@ function EditExpense() {
           )}
         </div>
 
+        {/* Amount input */}
         <div className="mb-4">
           <label className="block text-gray-700 required" htmlFor="amount">
             Amount
@@ -115,6 +135,7 @@ function EditExpense() {
           )}
         </div>
 
+        {/* Category input */}
         <div className="mb-4">
           <label className="block text-gray-700 required" htmlFor="category">
             Category
@@ -143,6 +164,7 @@ function EditExpense() {
           )}
         </div>
 
+        {/* Payment Method input */}
         <div className="mb-4">
           <label className="block text-gray-700 required" htmlFor="paymentMethod">
             Payment Method
@@ -169,6 +191,7 @@ function EditExpense() {
           )}
         </div>
 
+        {/* Date input */}
         <div className="mb-4">
           <label className="block text-gray-700 required" htmlFor="date">
             Date
@@ -181,7 +204,7 @@ function EditExpense() {
             className="border p-2 w-full rounded-lg"
             aria-required="true"
             id="date"
-            max={new Date().toISOString().split("T")[0]}
+            max={new Date().toISOString().split("T")[0]} // Restrict to current or past dates
           />
           {errors.date && (
             <p className="text-red-500" role="alert">
@@ -190,6 +213,7 @@ function EditExpense() {
           )}
         </div>
 
+        {/* Update button */}
         <button
           type="submit"
           className="bg-primary text-white px-6 py-2 rounded-lg shadow hover:bg-primarylight"
@@ -198,23 +222,25 @@ function EditExpense() {
           Update Expense
         </button>
 
+        {/* Cancel button */}
         <button
-          type="button" // Update this to 'button'
-          className="bg-red-600 hover:bg-red-500 text-white px-6 py-2 rounded-lg shadow hover:bg-blue-500 mx-4"
+          type="button"
+          className="bg-red-600 hover:bg-red-500 text-white px-6 py-2 rounded-lg shadow mx-4"
           aria-label="Cancel Update"
           onClick={() => {
-            navigate("/");
+            navigate("/"); // Navigate back to the main page if cancel is clicked
           }}
         >
           Cancel
         </button>
       </form>
 
-      {/* Modal Component */}
+      {/* Modal Component for confirmation */}
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onConfirm={handleConfirmUpdate}
+        aria-label="Confirm update modal"
       />
     </div>
   );
